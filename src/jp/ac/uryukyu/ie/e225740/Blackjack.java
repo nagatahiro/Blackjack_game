@@ -50,7 +50,7 @@ public class Blackjack {
     }
     
     public static void main(String[] args){
-        System.out.println("ーーーgame startーーー");
+        System.out.println("----ゲーム開始-----");
 
         //山札をシャッフルする
         List <Integer> deck = new ArrayList<>(52);
@@ -60,7 +60,7 @@ public class Blackjack {
         Collections.shuffle(deck);
         
         //リスト内確認用 
-        System.out.println(deck);
+        //System.out.println(deck);
         
 
         //プレイヤーの手札のリストとディーラーのリストを作成
@@ -75,10 +75,11 @@ public class Blackjack {
         System.out.println("合計ポイントは"+ sumPoint(player)+"です。");
         System.out.println("-----------------------------");
 
-        //　ーーーーー以下ループーーーーー
+        //　---以下ループ---
         int dCount = 1;
+        int dealerCo = 0;
         while(true){
-            System.out.println("ーー"+dCount+"ターン目ーー");
+            System.out.println("--"+dCount+"ターン目--");
             System.out.println("カードを引きますか？Yes:y or No:n");
 
             //入力の処理
@@ -99,6 +100,11 @@ public class Blackjack {
             //ディーラー側のポイント数が17以下なら引く
             if (sumPoint(dealer)<17){
                 dealer.add(deck.get(dCount*2+1));
+            }else{
+                dealerCo = 1;
+            }
+            if (sumPoint(dealer)>21){
+                dealerCo = 2;
             }
             if (sumPoint(dealer)>21||sumPoint(player)>21){
                 break;
@@ -110,7 +116,22 @@ public class Blackjack {
                 System.out.println("あなたの入力は" + str + " です。y か n を入力してください。");
             }
         }
-
+        //ディーラー側の処理
+        while(dealerCo==0){
+            dCount ++;
+            System.out.println("--"+dCount+"ターン目--");
+            System.out.println("-----------------------------");
+            System.out.println("ディーラーが一枚引きました");
+            System.out.println("-----------------------------");
+            dealer.add(deck.get(dCount*2));
+            if(sumPoint(dealer)>17){
+                dealerCo = 1;
+            }
+        }
+        System.out.println("-----ゲーム終了-----");
+        System.out.println("あなたの合計ポイントは"+sumPoint(player)+"ポイント");
+        System.out.println("ディーラーの合計ポイントは"+sumPoint(dealer)+"ポイント");
+        
         //勝敗の判定
         if (sumPoint(dealer)>21||sumPoint(player)>21){
             if (sumPoint(player)>21){
@@ -133,10 +154,12 @@ public class Blackjack {
                 }
             }
         }
-
+        /* 
+        ディーラーの手札確認用
         System.out.println(sumPoint(dealer));        
-        System.out.println(dealer);        
-        System.out.println("ゲーム終了");
+        System.out.println(dealer);   
+        */     
+
     
 
     }
