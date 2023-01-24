@@ -87,6 +87,19 @@ public class Blackjack {
             String str = scan.next();
 
             if("n".equals(str)) {
+                if (sumPoint(dealer)<17){
+                    dealer.add(deck.get(dCount*2+1));
+                    System.out.println("-----------------------------");
+                    System.out.println("ディーラーが一枚引きました");
+                    System.out.println("-----------------------------");
+
+                }else{
+                    dealerCo = 1;
+                }
+                if (sumPoint(dealer)>21){
+                    dealerCo = 2;
+                }
+                
                 break;
             } else if("y".equals(str)) {
 
